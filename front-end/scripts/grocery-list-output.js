@@ -2,7 +2,7 @@
 // Sending JSON to AWS S3 & Dynamo DB
 
 let send_json_grocery_list_to_s3 = () => {
-  json_grocery_list = create_grocery_list_json();
+  let json_grocery_list = create_grocery_list_json();
   console.log(json_grocery_list);
 }
 

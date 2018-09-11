@@ -66,6 +66,7 @@
 
       <p>Item Name, Quantitity, Optional Notes</p>
 
+      <button class='add-item-button' onclick='get_api_response();'>API Test</button>
       <button class='add-item-button' onclick='add_line();'>Add Line</button>
       <button class='add-item-button' onclick='send_json_grocery_list_to_s3();'>Save List</button>
       <div id='grocery-list'>
@@ -76,11 +77,15 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script
+    			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+    			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    			  crossorigin="anonymous"></script>
     <script src="bootstrap.min.js"></script>
     <script src="page_functions.js"></script>
-    <script src="scripts/add-line.js"></script>
-    <script src="scripts\grocery-list-output.js"></script>
+    <script type="text/javascript" src="scripts/add-line.js"></script>
+    <script type="text/javascript" src="scripts/grocery-list-output.js"></script>
+    <script type="text/javascript" src="scripts/ajax-functions.js"></script>
 
   </body>
 </html>
