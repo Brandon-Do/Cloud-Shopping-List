@@ -11,7 +11,7 @@ The web application in concept is simple! I plan on letting users create shoppin
 the lists using email and phone. The users will be able to create their accounts, where the lists will be binded to their account.
 The lists will be stored onto an S3 bucket, and the list meta-data will be stored onto DynamoDB for fast reads! 
 
-## Technologies Used
+## Technologies That Will Be Used
 
 Front-End:
 - JavaScript
