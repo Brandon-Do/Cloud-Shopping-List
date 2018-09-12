@@ -1,4 +1,4 @@
-# Cloud-Shopping-List
+# Cloud Shopping List
 
 This web application is designed to be running serverless. This means that code is executed on demand, and that there are no running servers.
 This is done using AWS Lambda, triggering Lambda functions through API Gateway. This web app will be built on-top of AWS resources such as S3, Lambda, DynamoDB, and SNS.
@@ -18,7 +18,7 @@ Front-End:
 - jQuery, AJAX
 
 Back-End:
-- AWS Lambda
+- AWS Lambda (Python)
 - AWS API Gateway
 - AWS S3
 - AWS DynamoDB
