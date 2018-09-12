@@ -3,7 +3,8 @@
 
 let send_json_grocery_list_to_s3 = () => {
   let json_grocery_list = create_grocery_list_json();
-  console.log(json_grocery_list);
+  console.log('sending JSON list....', json_grocery_list);
+  send_grocery_list_to_s3(json_grocery_list);
 }
 
 let create_grocery_list_json = () => {
