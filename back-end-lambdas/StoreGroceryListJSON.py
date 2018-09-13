@@ -1,14 +1,28 @@
 import os
 import botocore
 import boto3
+import datetime
+
+from random import randInt
 
 def lambda_handler(event, context):
-    #try:
-    text_file_name = putJSONListIntoBucket(event)   # Store grocery list 'items' to txt file on S3, return
-    storeMetaDataOnDynamo(event, text_file_name)    # Attach name of file
+#try:
+    file_name = generateTextFileName(event)
+    if textFileExistsInBucket(file_name, os.environ['BUCKET_NAME']):
+        return {
+            "message":"Error, List Name exists! Delete the old list before creating the new one.",
+            "status_code":"418"
+        }
+    putJSONListIntoBucket(event, file_name)     # Store grocery list 'items' to txt file on S3, return
+    storeMetaDataOnDynamo(event, file_name)     # Attach name of file
+    # Note to Self, update list view with new lambda function after this has been stored.
     return {'message':'{} Saved!'.format(event['list-name']), 'status_code':200}
-    #except:
-    #    return {'message':"Serverside error", 'status_code':300}
+#except:
+    return {'message':"Serverside error", 'status_code':300}
+
+###########################
+### Dynamo DB Functions ###
+###########################
 
 def storeMetaDataOnDynamo(event, text_file_name)   :
     """ Take JSON and name of text file stored on S3, put onto Dynamo Table
@@ -17,16 +31,36 @@ def storeMetaDataOnDynamo(event, text_file_name)   :
     event -- JSON grocery list
     text_file_name -- Name of txt file of JSON stored onto S3
     """
-    pass
+    dynamodb = boto3.client('dynamodb')
+    current_date = ''
+    response = client.batch_write_item(
+        RequestItems={
 
-def putJSONListIntoBucket(event):
+        })
+
+###########################
+### S3 Bucket Functions ###
+###########################
+
+def textFileExistsInBucket(file_name, bucket_name):
+    """ Checks if the name of text_file is already taken in the bucket
+
+    Keyword Arguments:
+    file_name -- Output of generateTextFileName
+    bucket_name -- Name of environment variable for S3 bucket
+    """
+
+    # Implement Me
+    return False
+
+def putJSONListIntoBucket(event, file_name):
     """ Stores JSON Items as text file in S3
 
     Keyword Arguments
     event -- JSON grocery list
     """
     s3 = boto3.resource('s3')
-    bucket_name = os.environ['BUCKET_NAME']
+    bucket_name =  os.environ['BUCKET_NAME']
 
     if doesBucketNotExist(s3, bucket_name):
         print("Creating bucket: ", bucket_name)
@@ -34,9 +68,9 @@ def putJSONListIntoBucket(event):
     'LocationConstraint': 'us-west-2'})
 
     text_data = createTextDataFromJSON(event['list-name'], event['items'])
-    file_name = event['list-name'] + '.txt' # Note, implement check if overwriting existing list
     lambda_path = "/tmp/" + file_name
     s3.Bucket(bucket_name).put_object(Key=file_name, Body=text_data.encode("utf-8"))
+    return file_name # Return file_name to be stored into dyanmo
 
 def createTextDataFromJSON(list_name, items):
     """ Takes list-name and list items from JSON, converts to string
@@ -69,3 +103,24 @@ def doesBucketNotExist(s3, bucket_name):
             exists = False
 
     return not exists
+
+###################################
+### Formatting Helper Functions ###
+###################################
+
+def generateTextFileName(event):
+    """ Generates file name for txt grocery list to store on S3
+
+    Keyword Arguments
+    event -- JSON grocery list
+    """
+    return event['username'] + '/' + event['list-name'] + '.txt'
+
+def generateDate(date_format='%Y-%m-%d'):
+    """ Generate date string for dynamodb partition key
+
+    Key Arguments
+    date_format -- date format for strftime "string format time"
+    """
+    now = datetime.datetime.now()
+    return now.strftime(date_format)
