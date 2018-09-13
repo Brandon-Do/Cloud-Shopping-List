@@ -10,7 +10,7 @@ let ajax_request = (url, data, callback, method) => {
     crossDomain: true,
     data: data,
     // headers: {
-    //
+    // // Token Here
     // },
     dataType: 'json',
     contentType: 'application/json',
