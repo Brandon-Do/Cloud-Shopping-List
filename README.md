@@ -26,9 +26,12 @@ Back-End:
 
 ## Development Pictures
 
-Example of running the Lambda function through API Gateway to Store the Grocery List Data into an S3 Bucket:
+(9/12) Example of running the Lambda function through API Gateway to Store the Grocery List Data into an S3 Bucket:
 
 ![alt text](https://s3-us-west-2.amazonaws.com/brandon-do-public/portfolio/cloud-shopping-list/cloud_shopping_list_stage1.PNG)
 
+(9/13) Picture of DynamoDB database schema of grocery list meta data
+
+![alt text](https://s3-us-west-2.amazonaws.com/brandon-do-public/portfolio/cloud-shopping-list/cloud_shopping_list_dynamodb_schema.PNG)
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
