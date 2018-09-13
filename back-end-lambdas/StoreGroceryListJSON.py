@@ -3,7 +3,7 @@ import botocore
 import boto3
 import datetime
 
-from random import randInt
+from random import randint
 
 def lambda_handler(event, context):
 #try:
@@ -31,12 +31,16 @@ def storeMetaDataOnDynamo(event, text_file_name)   :
     event -- JSON grocery list
     text_file_name -- Name of txt file of JSON stored onto S3
     """
-    dynamodb = boto3.client('dynamodb')
-    current_date = ''
-    response = client.batch_write_item(
-        RequestItems={
-
-        })
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table(os.environ['TABLE_NAME'])
+    partition_key = generatePartitionDateKey()
+    json_item = {
+            'partition-date': partition_key,
+            'username': event['username'],
+            'list-name': event['list-name'],
+            'list-location': text_file_name
+        } # Item to be store in DynamoDB
+    table.put_item(Item=json_item)
 
 ###########################
 ### S3 Bucket Functions ###
@@ -116,11 +120,12 @@ def generateTextFileName(event):
     """
     return event['username'] + '/' + event['list-name'] + '.txt'
 
-def generateDate(date_format='%Y-%m-%d'):
-    """ Generate date string for dynamodb partition key
+def generatePartitionDateKey(date_format='%Y-%m-%d'):
+    """ Generate date-based partition key, spread across ten partitions 0-9
 
-    Key Arguments
+    Keyword Arguments
     date_format -- date format for strftime "string format time"
     """
     now = datetime.datetime.now()
-    return now.strftime(date_format)
+    partition_number = str(randint(0, 9))
+    return partition_number + '-' + now.strftime(date_format)
