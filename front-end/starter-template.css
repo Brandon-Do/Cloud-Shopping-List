@@ -19,6 +19,14 @@ body {
   background-color: #ffffff;
 }
 
+#grocery-list {
+  margin-top: 25px;
+}
+
+#grocery-list form {
+  margin-bottom: 5px;
+}
+
 #server-message {
   color: red;
 }

@@ -69,4 +69,4 @@ let add_grocery_line = (num=1) => {
   add_grocery_item_forms(num);
   fill_json_list_items(json_items);
 }
-add_grocery_line();
+add_grocery_line(5);
