@@ -18,3 +18,7 @@ body {
 .add-item-button:hover {
   background-color: #ffffff;
 }
+
+#server-message {
+  color: red;
+}

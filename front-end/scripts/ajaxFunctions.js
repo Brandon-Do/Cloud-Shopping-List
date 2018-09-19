@@ -35,6 +35,7 @@ let send_grocery_list_to_s3 = (grocery_list_json) => {
   console.log('grocery_list_json',grocery_list_json);
   $.post(API_URL, grocery_list_json, (response) => {
     console.log('response: ', response);
+    handle_res(response);
   })
 }
 
@@ -45,4 +46,11 @@ let invoke_get = () => {
     console.log('successfully called API Gateway');
     console.log(response['body']);
   });
+}
+
+// Post Server Response Message To Frontend
+
+let handle_res = (res) => {
+  const message_output_id = 'server-message';
+  document.getElementById(message_output_id).innerHTML = res['message'];
 }

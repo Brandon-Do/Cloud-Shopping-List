@@ -60,14 +60,14 @@
 
 
       <!-- Input Grocery Items -->
-
+      <p id='server-message'>Enter Grocery List Information Here</p>
       <input placeholder='Shopping list name' type='text' id='list-name' value='myGroceryList'></input>
       <input placeholder='Username' type='text' id='username' value='brandondo64'></input>
 
       <p>Item Name, Quantitity, Optional Notes</p>
 
       <button class='add-item-button' onclick='invoke_get();'>API Test</button>
-      <button class='add-item-button' onclick='add_line();'>Add Line</button>
+      <button class='add-item-button' onclick='add_grocery_line();'>Add Line</button>
       <button class='add-item-button' onclick='send_json_grocery_list_to_s3();'>Save List</button>
       <div id='grocery-list'>
       </div>
@@ -83,9 +83,9 @@
     			  crossorigin="anonymous"></script>
     <script src="bootstrap.min.js"></script>
     <script src="page_functions.js"></script>
-    <script type="text/javascript" src="scripts/add-line.js"></script>
-    <script type="text/javascript" src="scripts/grocery-list-output.js"></script>
-    <script type="text/javascript" src="scripts/ajax-functions.js"></script>
+    <script type="text/javascript" src="scripts/addLine.js"></script>
+    <script type="text/javascript" src="scripts/groceryListOutput.js"></script>
+    <script type="text/javascript" src="scripts/ajaxFunctions.js"></script>
 
   </body>
 </html>

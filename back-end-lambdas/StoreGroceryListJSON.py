@@ -1,24 +1,31 @@
 import os
 import botocore
 import boto3
-import datetime
 
+from datetime import datetime
 from random import randint
 
 def lambda_handler(event, context):
-#try:
-    file_name = generateTextFileName(event)
-    if textFileExistsInBucket(file_name, os.environ['BUCKET_NAME']):
-        return {
-            "message":"Error, List Name exists! Delete the old list before creating the new one.",
-            "status_code":"418"
-        }
-    putJSONListIntoBucket(event, file_name)     # Store grocery list 'items' to txt file on S3, return
-    storeMetaDataOnDynamo(event, file_name)     # Attach name of file
-    # Note to Self, update list view with new lambda function after this has been stored.
-    return {'message':'{} Saved!'.format(event['list-name']), 'status_code':200}
-#except:
-    return {'message':"Serverside error", 'status_code':300}
+    """ Takes grocery list JSON, stores meta-data in DynamoDB and list in S3
+
+    Keyword Arguments
+    event -- JSON Grocery List with user-data
+    context -- Lambda Context
+    """
+    try:
+        file_name = generateTextFileName(event)
+        if textFileExistsInBucket(file_name, os.environ['BUCKET_NAME']):
+            return {
+                "message":"Error, List Name exists! Delete the old list before creating the new one.",
+                "status_code":"418"
+            }
+
+        putJSONListIntoBucket(event, file_name)     # Store grocery list 'items' to txt file on S3, return
+        storeMetaDataOnDynamo(event, file_name)     # Attach name of file
+                                                    # Note to Self, update list view with new lambda function after this has been stored.
+        return {'message':'{} Saved!'.format(event['list-name']), 'status_code':200 }
+    except:
+        return {'message':"Serverside error", 'status_code':400}
 
 ###########################
 ### Dynamo DB Functions ###
@@ -53,9 +60,18 @@ def textFileExistsInBucket(file_name, bucket_name):
     file_name -- Output of generateTextFileName
     bucket_name -- Name of environment variable for S3 bucket
     """
+    s3 = boto3.resource('s3')
+    bucket_name =  os.environ['BUCKET_NAME']
+    file_exists = False
 
-    # Implement Me
-    return False
+    try:
+        s3.Object(bucket_name, file_name).load()
+    except botocore.exceptions.ClientError as e:
+        if e.response['Error']['Code'] == "404":
+            return file_exists
+    else:
+        file_exists = True
+    return file_exists
 
 def putJSONListIntoBucket(event, file_name):
     """ Stores JSON Items as text file in S3
@@ -126,6 +142,6 @@ def generatePartitionDateKey(date_format='%Y-%m-%d'):
     Keyword Arguments
     date_format -- date format for strftime "string format time"
     """
-    now = datetime.datetime.now()
+    now = datetime.now()
     partition_number = str(randint(0, 9))
     return partition_number + '-' + now.strftime(date_format)
