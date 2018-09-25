@@ -1,4 +1,3 @@
-
 const SEARCH_API_URL = "https://tggnqn2byg.execute-api.us-west-2.amazonaws.com/prod/search";
 const SEARCH_INPUT = document.getElementById("groceryListSearchInput");
 const SEARCH_OUTPUT = document.getElementById("groceryListSearchOutput");
@@ -31,9 +30,10 @@ let display_search_results = items => {
   })
 }
 
+// For each database match, create search result in list
 let create_list_item = (item, list_attributes) => {
-  let onclick_function = "on_click_function('"+item['list-name']+ "');";
-  console.log(onclick_function);
+  let onclick_function = "get_list_from_s3('"+item['list-location']+ "');";
+  console.log('retrieving:', item['list-name'])
   let list_item = $('<li/>')
     .addClass('search-result-list-item')
     .attr('onclick', onclick_function)
@@ -46,9 +46,3 @@ let create_list_item = (item, list_attributes) => {
       .appendTo(list_item);
   });
 }
-
-let on_click_function = (text) => {console.log(text)};
-
-// To Do
-// Create Get Shopping List Content, Add List Location as Argument,
-// The API Will return GroceryListJSON, then we use populate JSON Functions

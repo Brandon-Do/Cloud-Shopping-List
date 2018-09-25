@@ -36,7 +36,7 @@ let send_grocery_list_to_s3 = (grocery_list_json) => {
   })
 }
 
-// Invoke GroceryListAPI GET
+// Invoke GroceryListAPI GET *Note to self remove later*
 
 let invoke_get = () => {
   $.get(API_URL, {"message":"Hello Lambda"}, (response) => {

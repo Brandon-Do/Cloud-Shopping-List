@@ -44,6 +44,10 @@ let fill_json_list_items = (json_item) => {
 let fill_form_with_json = (form, json) => {
   const input_names = ['item-name', 'item-quantity', 'item-notes'];
   input_names.forEach(key => {
+    // if (typeof(json) == 'string'){
+    //   console.log("string json", json)
+    //   json = JSON.parse(json);
+    // }
     form[key].value = json[key];
     console.log(form[key], json[key]);
   })
