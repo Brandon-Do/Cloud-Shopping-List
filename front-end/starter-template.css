@@ -30,3 +30,9 @@ body {
 #server-message {
   color: red;
 }
+
+/* Search Bar & Result Styles */
+.search-result-list-item {
+  padding: 5px;
+  background-color: #a6d0a6;
+}

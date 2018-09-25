@@ -30,12 +30,9 @@ jQuery.extend({
 // Invoke GroceryListAPI PUT
 
 let send_grocery_list_to_s3 = (grocery_list_json) => {
-  console.log('in send grocery list');
   grocery_list_json = JSON.stringify(grocery_list_json);
-  console.log('grocery_list_json',grocery_list_json);
   $.post(API_URL, grocery_list_json, (response) => {
-    console.log('response: ', response);
-    handle_res(response);
+    display_server_response(response);
   })
 }
 
@@ -50,7 +47,7 @@ let invoke_get = () => {
 
 // Post Server Response Message To Frontend
 
-let handle_res = (res) => {
+let display_server_response = (res) => {
   const message_output_id = 'server-message';
   document.getElementById(message_output_id).innerHTML = res['message'];
 }
