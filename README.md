@@ -33,9 +33,9 @@ Back-End:
 ![Project Snapshot 9/25](https://s3-us-west-2.amazonaws.com/brandon-do-public/portfolio/cloud-shopping-list/cloud_shopping_list.PNG)
 
 
-(9/13) Picture of DynamoDB database schema of grocery list meta data:
+(9/25) Updated DynamoDB Schema:
 
-![Project Snapshot 9/13](https://s3-us-west-2.amazonaws.com/brandon-do-public/portfolio/cloud-shopping-list/cloud_shopping_list_dynamodb_schema.PNG)
+![Project Snapshot 9/25](https://s3-us-west-2.amazonaws.com/brandon-do-public/portfolio/cloud-shopping-list/cloud_shopping_list_db_schema.PNG)
 
 
 (9/12) Example of running the Lambda function through API Gateway to Store the Grocery List Data into an S3 Bucket:
