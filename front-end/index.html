@@ -12,13 +12,13 @@
     <!-- Bootstrap core CSS -->
     <link href="bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
   </head>
 
   <body>
 
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">Cloud Shopping List</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -26,54 +26,38 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">LinkedIn</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Github Repository</a>
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
       </div>
     </nav>
 
     <main role="main" class="container">
 
       <div class="starter-template">
-        <h1>Cloud Shopping List</h1>
-        <p class="lead">This application will allow you to create shopping lists and then send them to your phone or email!</p>
+        <h2>Built on AWS Lambda</h2>
+        <p class="lead">This application will allow you to create shopping lists and then send them to your phone or email -- still a work in progress!</p>
         <p class="output"></p>
       </div>
 
+      <!-- Search Grocery Lists -->
+      <input id="groceryListSearchInput" class="form-control mr-sm-2" type="text" placeholder="Search Your Lists" aria-label="Search" oninput="searchGroceryLists();">
+      <ul id='groceryListSearchOutput'></ul>
 
       <!-- Input Grocery Items -->
       <p id='server-message'>Enter Grocery List Information Here</p>
-      <input placeholder='Shopping list name' type='text' id='list-name' value='myGroceryList'></input>
-      <input placeholder='Username' type='text' id='username' value='brandondo64'></input>
-
-      <p>Item Name, Quantitity, Optional Notes</p>
-
-      <button class='add-item-button' onclick='invoke_get();'>API Test</button>
+      <input class='shopping-list-input' placeholder='Shopping list name' type='text' id='list-name' value='myGroceryList'>
+      <input class='shopping-list-input' placeholder='Username' type='text' id='username' value='brandondo64'>
+      <input class='shopping-list-input' placeholder='Phone No. or Email' type='text' id='contact' value=''>
       <button class='add-item-button' onclick='add_grocery_line();'>Add Line</button>
       <button class='add-item-button' onclick='send_json_grocery_list_to_s3();'>Save List</button>
+      <button class='add-item-button' onclick='send_json_grocery_list_to_s3();'>Send to Contact</button>
       <div id='grocery-list'>
       </div>
 
-      <input id="groceryListSearchInput" class="form-control mr-sm-2" type="text" placeholder="Search Your Lists" aria-label="Search" onkeyup="searchGroceryLists();" value = "";>
-      <li id='groceryListSearchOutput'>
       </li>
     </main><!-- /.container -->
 
@@ -85,7 +69,6 @@
     			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     			  crossorigin="anonymous"></script>
     <script src="bootstrap.min.js"></script>
-    <script src="page_functions.js"></script>
     <script type="text/javascript" src="scripts/addLine.js"></script>
     <script type="text/javascript" src="scripts/groceryListOutput.js"></script>
     <script type="text/javascript" src="scripts/ajaxFunctions.js"></script>

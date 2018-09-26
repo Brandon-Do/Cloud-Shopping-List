@@ -23,9 +23,9 @@ let searchGroceryLists = () => {
 // Displays Search Results to user
 let display_search_results = items => {
   $("#groceryListSearchOutput").empty(); // clear previous search results
+  const list_attributes = ['list-name'];
   items.forEach(item => {
     item = JSON.parse(item);
-    let list_attributes = ['list-name', 'date-created'];
     create_list_item(item, list_attributes);
   })
 }
@@ -33,8 +33,7 @@ let display_search_results = items => {
 // For each database match, create search result in list
 let create_list_item = (item, list_attributes) => {
   let onclick_function = "get_list_from_s3('"+item['list-location']+ "');";
-  console.log('retrieving:', item['list-name'])
-  let list_item = $('<li/>')
+  let list_item = $('<a></a>')
     .addClass('search-result-list-item')
     .attr('onclick', onclick_function)
     .appendTo(SEARCH_OUTPUT);

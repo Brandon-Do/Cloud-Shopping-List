@@ -1,0 +1,99 @@
+body {
+  padding-top: 5rem;
+  background-color: #dddfd4;
+}
+
+input {
+
+}
+
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.grocery-item {
+  margin-top: 0.25rem;
+}
+
+.grocery-item input {
+  width: 33.33%;
+}
+
+.add-item-button {
+  height: 30px;
+  width: 100px;
+  background-color: #e8edf3;
+}
+
+.add-item-button:hover {
+  background-color: #ffffff;
+}
+
+#grocery-list {
+  margin-top: 25px;
+}
+
+#grocery-list form {
+  margin-bottom: 5px;
+}
+
+#server-message {
+  color: #b56969;
+}
+
+/* Input Styles */
+
+.shopping-list-input {
+  margin: 0;
+  width: 32.5%;
+}
+
+/* Search Bar & Result Styles */
+#groceryListSearchOutput {
+  padding: 0;
+}
+
+.search-result-list-item {
+  display: inline-block;
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 0.25rem;
+
+  cursor: pointer;
+  background-color: #fae596;
+  border: 0.125rem solid lightgray;
+  border-radius: .5rem;
+  list-style-type: none;
+  transition: all .5s ease-in;
+}
+
+.search-result-list-item:hover {
+  background-color: #e6cf8b;
+  transition: all .5s ease-in;
+}
+
+.search-result-list-item span {
+  letter-spacing: 1px;
+  font-family: inherit;
+  font-size: inherit;
+	font-weight: 700;
+}
+
+
+/* Button Styles */
+.add-item-button {
+  width: 32.5%;
+  margin: 1rem 0rem 1rem 0rem;
+  border: none;
+	text-transform: uppercase;
+	/*letter-spacing: 1px;*/
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+	font-weight: 700;
+
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
