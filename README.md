@@ -3,7 +3,9 @@
 This web application is designed to be running serverless. This means that code is executed on demand, and that there are no running servers.
 This is done using AWS Lambda, triggering Lambda functions through API Gateway. This web app will be built on-top of AWS resources such as S3, Lambda, DynamoDB, and SNS.
 
-> Please note: this project is under construction as of 9/12/2018
+[LINK TO PROJECT](http://cloudshoppinglist.com.s3-website-us-east-1.amazonaws.com/)
+
+> Please note: this project is under construction as of 9/25/2018
 
 ## What does this Application Do?
 
