@@ -1,4 +1,4 @@
-
+"use strict";
 // Establishing connection to API Gateway GroceryListAPI
 
 const API_URL = "https://tggnqn2byg.execute-api.us-west-2.amazonaws.com/prod/grocery-lists";

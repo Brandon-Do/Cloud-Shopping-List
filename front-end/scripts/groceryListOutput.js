@@ -1,3 +1,4 @@
+"use strict";
 // Sending JSON to AWS S3 & Dynamo DB
 
 let send_json_grocery_list_to_s3 = () => {
@@ -19,7 +20,7 @@ let create_grocery_list_json = () => {
 
 let get_json_list_items = () => {
   let forms = get_forms();
-  result = forms
+  let result = forms
     .map(item => line_item_to_json(item))
     .filter(item => item['item-name'] != '');
   return result;
@@ -44,26 +45,18 @@ let fill_json_list_items = (json_item) => {
 let fill_form_with_json = (form, json) => {
   const input_names = ['item-name', 'item-quantity', 'item-notes'];
   input_names.forEach(key => {
-    // if (typeof(json) == 'string'){
-    //   console.log("string json", json)
-    //   json = JSON.parse(json);
-    // }
     form[key].value = json[key];
     console.log(form[key], json[key]);
-  })
+  });
 }
 
 let line_item_to_json = (line_item) => {
   let json_object = {};
   for (let i = 0; i<line_item.length; i++){
-    input_field = line_item[i];
+    let input_field = line_item[i];
     json_object[input_field.getAttribute('name')] = input_field.value;
   }
   return json_object;
-}
-
-let get_forms = (div_id="grocery-list", form_id=".grocery-item") => {
-  return [].slice.call(document.getElementById(div_id).querySelectorAll(form_id));
 }
 
 // Add Line Items to List SAFELY

@@ -1,3 +1,4 @@
+"use strict";
 const SEARCH_API_URL = "https://tggnqn2byg.execute-api.us-west-2.amazonaws.com/prod/search";
 const SEARCH_INPUT = document.getElementById("groceryListSearchInput");
 const SEARCH_OUTPUT = document.getElementById("groceryListSearchOutput");

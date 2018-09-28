@@ -51,8 +51,9 @@
       <p id='server-message'>Enter Grocery List Information Here</p>
       <input class='shopping-list-input' placeholder='Shopping list name' type='text' id='list-name' value='myGroceryList'>
       <input class='shopping-list-input' placeholder='Username' type='text' id='username' value='brandondo64'>
-      <input class='shopping-list-input' placeholder='Phone No. or Email' type='text' id='contact' value=''>
+      <input class='shopping-list-input' placeholder='Phone Number' type='tel' id='contact' value=''>
       <button class='add-item-button' onclick='add_grocery_line();'>Add Line</button>
+      <button class='add-item-button' onclick='clear_input_values();'>Clear List</button>
       <button class='add-item-button' onclick='send_json_grocery_list_to_s3();'>Save List</button>
       <button class='add-item-button' onclick='send_json_grocery_list_to_s3();'>Send to Contact</button>
       <div id='grocery-list'>
