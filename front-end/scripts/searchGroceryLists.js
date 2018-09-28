@@ -16,7 +16,6 @@ let searchGroceryLists = () => {
     "sort-key": SEARCH_KEY_DEFAULT
   });
   $.post(SEARCH_API_URL, search_json, (response) => {
-    console.log("Database items that match: ", search_query);
     display_search_results(response['body']);
   });
 }

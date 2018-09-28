@@ -4,7 +4,7 @@
 let send_json_grocery_list_to_s3 = () => {
   let json_grocery_list = create_grocery_list_json();
   console.log('sending JSON list....', json_grocery_list);
-  res = send_grocery_list_to_s3(json_grocery_list);
+  let res = send_grocery_list_to_s3(json_grocery_list);
 }
 
 let create_grocery_list_json = () => {
@@ -46,7 +46,6 @@ let fill_form_with_json = (form, json) => {
   const input_names = ['item-name', 'item-quantity', 'item-notes'];
   input_names.forEach(key => {
     form[key].value = json[key];
-    console.log(form[key], json[key]);
   });
 }
 

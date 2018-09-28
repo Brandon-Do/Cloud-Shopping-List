@@ -55,7 +55,7 @@
       <button class='add-item-button' onclick='add_grocery_line();'>Add Line</button>
       <button class='add-item-button' onclick='clear_input_values();'>Clear List</button>
       <button class='add-item-button' onclick='send_json_grocery_list_to_s3();'>Save List</button>
-      <button class='add-item-button' onclick='send_json_grocery_list_to_s3();'>Send to Contact</button>
+      <button class='add-item-button' onclick='send_current_list_to_phone();'>Send to Contact</button>
       <div id='grocery-list'>
       </div>
 
@@ -75,5 +75,6 @@
     <script type="text/javascript" src="scripts/ajaxFunctions.js"></script>
     <script type="text/javascript" src="scripts/getShoppingList.js"></script>
     <script type="text/javascript" src="scripts/searchGroceryLists.js"></script>
+    <script type="text/javascript" src="scripts/sendGroceryListToPhone.js"></script>
   </body>
 </html>
