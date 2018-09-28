@@ -4,22 +4,28 @@ import boto3
 sns = boto3.client('sns')
 
 def lambda_handler(event, context):
-    phone_number = event['phone-number']
-    list_name = event['list-name']
-    list_items = event['items']
+    try:
+        phone_number = event['phone-number']
+        list_name = event['list-name']
+        list_items = event['items']
 
-    if not is_valid_phone_number(phone_number):
+        if not is_valid_phone_number(phone_number):
+            return {
+                "statusCode": 400,
+                "message":"Error, please format phone number: 0001112222"
+            }
+        phone_number = '+1' + phone_number # add country code
+        text = format_json_for_text_message(list_name, list_items)
+        send_str_to_phone(phone_number, text)
         return {
-            "statusCode": 400,
-            "message":"Error, please format phone number: 0001112222"
+            "statusCode": 200,
+            "message": "Success, sent {} to {}".format(list_name, phone_number)
         }
-    phone_number = '+1' + phone_number # add country code
-    text = format_json_for_text_message(list_name, list_items)
-    send_str_to_phone(phone_number, text)
-    return {
-        "statusCode": 200,
-        "message": "Success, sent {} to {}".format(list_name, phone_number)
-    }
+    except:
+        return {
+            "statusCode": 418,
+            "message": "Serverside error"
+        }
 
 
 def send_str_to_phone(phone_number, text):
