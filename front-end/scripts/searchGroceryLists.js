@@ -32,7 +32,7 @@ let display_search_results = items => {
 
 // For each database match, create search result in list
 let create_list_item = (item, list_attributes) => {
-  let onclick_function = "get_list_from_s3('"+item['list-location']+ "');";
+  let onclick_function = "get_list_from_s3('"+item['list-location']+ "');clear_search_input();";
   let list_item = $('<a></a>')
     .addClass('search-result-list-item')
     .attr('onclick', onclick_function)
@@ -44,4 +44,9 @@ let create_list_item = (item, list_attributes) => {
       .addClass(attr)
       .appendTo(list_item);
   });
+}
+
+let clear_search_input = () => {
+  SEARCH_INPUT.value = '';
+  SEARCH_OUTPUT.innerHTML = '';
 }

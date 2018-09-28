@@ -52,13 +52,15 @@ input {
 /* Search Bar & Result Styles */
 #groceryListSearchOutput {
   padding: 0;
+  position: absolute;
+  margin-bottom: 5rem;
+  width: auto;
 }
 
 .search-result-list-item {
   display: inline-block;
   width: 100%;
   padding: 1rem;
-  margin-bottom: 0.25rem;
 
   cursor: pointer;
   background-color: #fae596;
