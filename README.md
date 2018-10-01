@@ -1,14 +1,19 @@
 # Cloud Shopping List
 
-This web application is designed to be running serverless. This means that code is executed on demand, and that there are no running servers.
-This is done using AWS Lambda, triggering Lambda functions through API Gateway. This web app will be built on-top of AWS resources such as S3, Lambda, DynamoDB, and SNS.
+This web app was designed using a serverless architecture, built to be highly scaleable! The code is executed on demand, there are no servers hosting a running application.
+This is done using AWS Lambda, triggering Lambda functions through API Gateway. This web app has been built on-top of AWS resources such as Lambda and API Gateway, DynamoDB, S3, and SNS (also utilized IAM for roles/permissions).
 
 [LINK TO PROJECT](http://cloudshoppinglist.com.s3-website-us-east-1.amazonaws.com/)
 ## What does this Application Do?
 
-The web application in concept is simple! I plan on letting users create shopping lists using the web application and then sending them
-the lists using email and phone. The users will be able to create their accounts, where the lists will be binded to their account.
-The lists will be stored onto an S3 bucket, and the list meta-data will be stored onto DynamoDB for fast reads!
+The web application in concept is simple! Users are able to input their username and create grocery lists. The grocery lists are tied to the username and can be saved to the database. The grocery list can be sent to a phone number by text message!
+
+When a grocery list is stored, the data itself is transformed into a string and stored onto a text document in S3. The meta-data, which includes the location of the text file, the name, and the user who stored it, is stored onto DynamoDB. Storing the text onto S3 allows me to get the fast reads of DynamoDB while avoiding exceeding the 400Kb memory limit of DynamoDB.
+
+When a list is saved or deleted, both the corresponding S3 bucket and DynamoDB table are updated using Lambda functions.
+
+>Future Additions
+>Add security features using STS
 
 ## Technologies That Will Be Used
 
@@ -24,6 +29,10 @@ Back-End:
 - AWS SNS
 
 ## Development Pictures
+
+(10/1) Finished Project with Added Functionality:
+
+![Project Snapshot 10/1](https://s3-us-west-2.amazonaws.com/brandon-do-public/portfolio/cloud-shopping-list/cloud_shopping_list_final.PNG)
 
 (9/25) Updated Front-End:
 
