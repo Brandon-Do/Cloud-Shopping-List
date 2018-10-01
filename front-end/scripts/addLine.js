@@ -14,16 +14,17 @@ let get_forms = (div_id="grocery-list", form_id=".grocery-item") => {
 // Clear Inputs from List collection of functions:
 
 let clear_input_values = () => {
+
   let grocery_forms = get_forms();
   grocery_forms
   .map(get_children) // Gets inputs from form
   .map(clear_inputs) // For each list of inputs, clear inputs
 }
 
-let get_children = (form) => {
+let get_children = form => {
   return [].slice.call(form.childNodes); // Returns list of inputs from form
 }
 
-let clear_inputs = (inputs) => {
+let clear_inputs = inputs => {
   inputs.forEach(input => input.value = '')
 }

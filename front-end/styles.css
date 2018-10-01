@@ -4,7 +4,12 @@ body {
 }
 
 input {
-
+  margin: 0;
+  padding: .25rem .5rem;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .starter-template {
@@ -44,9 +49,14 @@ input {
 
 /* Input Styles */
 
+#groceryListSearchInput {
+  margin-bottom: 0.5rem;
+}
+
 .shopping-list-input {
-  margin: 0;
+  margin-bottom: 1rem;
   width: 32.5%;
+  padding: .25rem .5rem;
 }
 
 /* Search Bar & Result Styles */
@@ -85,9 +95,9 @@ input {
 
 /* Button Styles */
 .add-item-button {
-  width: 24.5%;
-  margin: 1rem 0rem 1rem 0rem;
-  border: none;
+  width: 32.5%;
+  margin: .25rem 0rem 0rem 0rem;
+  border: .5px solid darkgray;
 	text-transform: uppercase;
 	/*letter-spacing: 1px;*/
   font-family: inherit;

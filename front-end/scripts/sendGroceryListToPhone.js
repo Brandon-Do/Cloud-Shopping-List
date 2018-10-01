@@ -2,8 +2,8 @@
 // We want to use these functions to send grocery shopping list
 //  to the mobile phone using AWS-SNS
 
-const PHONE_NUMBER_INPUT = document.getElementById("contact");
 const CONTACT_API_URL = "https://tggnqn2byg.execute-api.us-west-2.amazonaws.com/prod/contact";
+const PHONE_NUMBER_INPUT = document.getElementById("contact");
 
 let send_current_list_to_phone = () => {
   let phone_number = PHONE_NUMBER_INPUT.value;

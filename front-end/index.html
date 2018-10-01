@@ -53,9 +53,12 @@
       <input class='shopping-list-input' placeholder='Username' type='text' id='username' value='brandondo64'>
       <input class='shopping-list-input' placeholder='Phone Number' type='tel' id='contact' value=''>
       <button class='add-item-button' onclick='add_grocery_line();'>Add Line</button>
-      <button class='add-item-button' onclick='clear_input_values();'>Clear List</button>
       <button class='add-item-button' onclick='send_json_grocery_list_to_s3();'>Save List</button>
       <button class='add-item-button' onclick='send_current_list_to_phone();'>Send to Contact</button>
+      <button class='add-item-button' onclick='clear_input_values();'>Reset List</button>
+      <button class='add-item-button' onclick='delete_list();'>Delete List</button>
+      <button class='add-item-button' onclick='delete_list(true);'>Delete All Lists</button>
+
       <div id='grocery-list'>
       </div>
 
@@ -76,5 +79,6 @@
     <script type="text/javascript" src="scripts/getShoppingList.js"></script>
     <script type="text/javascript" src="scripts/searchGroceryLists.js"></script>
     <script type="text/javascript" src="scripts/sendGroceryListToPhone.js"></script>
+    <script type="text/javascript" src="scripts/deleteListFile.js"></script>
   </body>
 </html>

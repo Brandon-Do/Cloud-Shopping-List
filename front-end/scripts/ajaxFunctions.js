@@ -24,6 +24,9 @@ jQuery.extend({
     },
     post: (url, data, callback) => {
         return ajax_request(url, data, callback, 'POST');
+    },
+    delete: (url, data, callback) => {
+      return ajax_request(url, data, callback, 'DELETE');
     }
 });
 
