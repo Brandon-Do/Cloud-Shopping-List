@@ -4,9 +4,6 @@ This web application is designed to be running serverless. This means that code 
 This is done using AWS Lambda, triggering Lambda functions through API Gateway. This web app will be built on-top of AWS resources such as S3, Lambda, DynamoDB, and SNS.
 
 [LINK TO PROJECT](http://cloudshoppinglist.com.s3-website-us-east-1.amazonaws.com/)
-
-> Please note: this project is under construction as of 9/25/2018
-
 ## What does this Application Do?
 
 The web application in concept is simple! I plan on letting users create shopping lists using the web application and then sending them
