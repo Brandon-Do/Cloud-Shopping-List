@@ -21,14 +21,13 @@ input {
 }
 
 .container {
-  background-color: inherit;
+  background  /*text-transform: uppercase;*/-color: inherit;
   height: 100vh;
 }
 
 .nav-background {
   background-color: #3b3a36;
   font-style: inherit;
-  /*text-transform: uppercase;*/
   font-family: inherit;
   font-size: inherit;
 }
