@@ -14,17 +14,13 @@ def lambda_handler(event, context):
     try:
         file_name = generateTextFileName(event)
         if textFileExistsInBucket(file_name, os.environ['BUCKET_NAME']):
-            return {
-                "message":"Error, List Name exists! Delete the old list before creating the new one.",
-                "status_code":"418"
-            }
+            return {"message":"Error, List Name exists! Delete the old list before creating the new one.","statusCode":"418"}
 
         putJSONListIntoBucket(event, file_name)     # Store grocery list 'items' to txt file on S3, return
         storeMetaDataOnDynamo(event, file_name)     # Attach name of file
-                                                    # Note to Self, update list view with new lambda function after this has been stored.
-        return {'message':'{} Saved!'.format(event['list-name']), 'status_code':200 }
+        return {'message':'{} Saved!'.format(event['list-name']), 'statusCode':200 }
     except:
-        return {'message':"Serverside error", 'status_code':400}
+        return {'message':"Serverside error", 'statusCode':400}
 
 ###########################
 ### Dynamo DB Functions ###

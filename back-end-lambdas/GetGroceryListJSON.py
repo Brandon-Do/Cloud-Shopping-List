@@ -2,8 +2,6 @@ import os
 import botocore
 import boto3
 import json
-from datetime import datetime
-
 
 # Global variables used by all functions
 REGION = os.environ['REGION']
@@ -18,21 +16,11 @@ def lambda_handler(event, context):
         list_location = event['list-location']
         text_data = getTextFileData(list_location)
         if not text_data:
-            return {
-            "statusCode": 404,
-            "body": "File does not exist"
-            }
+            return {"statusCode": 404, "body": "File does not exist"}
         grocery_list_json = groceryListTextToJson(text_data)
-
-        return {
-            "statusCode": 200,
-            "body": grocery_list_json
-        }
+        return {"statusCode": 200,"body": grocery_list_json}
     except:
-        return {
-            "statusCode": 400,
-            "body": "serverside error"
-        }
+        return {"statusCode": 400,"body": "serverside error"}
 
 def groceryListTextToJson(text_data):
     """ converts grocery list string to grocery list json
@@ -62,22 +50,3 @@ def getTextFileData(list_location):
         f = s3.Object(BUCKET_NAME, list_location)       # get s3 file object
         text = f.get()['Body'].read().decode('utf-8')   # get text file data from object
         return text
-
-def BucketExists():
-    """ Checks if the bucket DOESN'T exist
-
-    Keyword Arguments:
-    s3 -- s3 resource object
-    bucket_name -- the bucket name
-    """
-    bucket = s3.Bucket(bucket_name)
-    exists = True
-    try:
-        s3.meta.client.head_bucket(Bucket=bucket_name)
-    except botocore.exceptions.ClientError as e:
-        # If a client error is thrown, then check that it was a 404 error.
-        # If it was a 404 error, then the bucket does not exist.
-        error_code = int(e.response['Error']['Code'])
-        if error_code == 404:
-            exists = False
-    return exists

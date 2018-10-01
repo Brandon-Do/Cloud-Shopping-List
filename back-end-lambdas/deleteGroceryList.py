@@ -15,20 +15,25 @@ table = dynamodb.Table(TABLE_NAME)
 def lambda_handler(event, context):
     """Deletes database items based on the front-end request.
     """
-    username = event['username']
-    list_name = event['list-name']
-    delete_all = event['delete-all'] # boolean
-    list_location = generateListLocation(username, list_name)
+    try:
+        username = event['username']
+        list_name = event['list-name']
+        delete_all = bool(event['delete-all']) # boolean
+        list_location = generateListLocation(username, list_name)
+        if delete_all:
+            deleteS3Object(username)
+            deleteDBRange(username)
+            return {"statusCode": 200, "message": "All lists associated with {} have been deleted!".format(username) }
 
-    if delete_all:
-        deleteDBRange(username)
-        return {"statusCode": 200, "message": "All lists associated with {} have been deleted!".format(username) }
+        if not fileExistsInBucket(list_location, BUCKET_NAME):
+            return {"statusCode": 200, "message": "{} had never existed in the first place.".format(list_name) + list_location}
 
-    if not fileExistsInBucket(list_location, BUCKET_NAME):
-        return {"statusCode": 200, "message": "{} had never existed in the first place.".format(list_name) + list_location}
+        deleteS3Object(list_location)       # Delete file from S3
+        deleteDBItem(username, list_name)   # Remove list meta-data from DynamoDb
 
-    deleteDBItem(username, list_location)
-    return {"statusCode": 200, "message": "Removed {} from our database.".format(list_name)}
+        return {"statusCode": 200, "message": "Removed {} from our database.".format(list_name)}
+    except:
+        return {"statusCode": 418,"message": "Serverside error"}
 
 ##########################
 ### DynamoDB Functions ###
@@ -63,16 +68,30 @@ def deleteDBRange(username):
         KeyConditionExpression = ce
     )
     items = response["Items"]
-    for item in items:
+    for item in items:                          # for each list associated with the username
         list_location = item['list-location']
-        deleteDBItem(username, list_location)
+        deleteDBItem(username, list_location)   # delete single meta-data item
+        deleteS3Object(list_location)           # delete corresponding text file
+    deleteS3Object(username + '/')              # after loop, delete the empty directory
+
+####################
+### S3 Functions ###
+####################
+
+def deleteS3Object(location_key):
+    """ delete a file off of the target S3 bucket
+
+    Key Arguments
+    location_key -- output of generateListLocation, location of file on s3
+    """
+    s3.Object(BUCKET_NAME, location_key).delete()
 
 ########################
 ### Helper Functions ###
 ########################
 
 def generateListLocation(username, list_name):
-    """ generates file placement in S3 based on standardized storage 
+    """ generates file placement in S3 based on standardized storage
     """
     return username + '/' + list_name + '.txt'
 

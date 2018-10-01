@@ -18,19 +18,10 @@ def lambda_handler(event, context):
     try:
         listname = event['list-name']
         username = event['username']
-        # limit = int(event['limit'])
-        # sort_key = event['sort-key']
-
         search_results = searchGroceryListNames(listname, username)
-        return {
-            "statusCode": 200,
-            "body": search_results
-        }
+        return {"statusCode": 200,"body": search_result, "message":"database matches that begin with {}".format(listname)}
     except:
-        return {
-            "statusCode": 300,
-            "message": "Serverside error"
-        }
+        return {"statusCode": 300,"message": "Serverside error" }
 
 def searchGroceryListNames(listname, username, limit=10, sort_key='date-created'):
     """ Get names of grocery lists and locations based on listname,
@@ -42,7 +33,6 @@ def searchGroceryListNames(listname, username, limit=10, sort_key='date-created'
                 listname = 'the' selects 'thelist1', 'thelist2'.
     username -- The username of the account fetching the list
     """
-    print("Location of lists that begin with:", listname, "sorted by", sort_key)
     ce = Key('username').eq(username)
     fe = Attr('list-name').begins_with(listname)
     response = table.query(
