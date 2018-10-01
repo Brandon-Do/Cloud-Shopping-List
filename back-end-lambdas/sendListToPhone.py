@@ -1,75 +1,114 @@
-import json
+import os
+import botocore
 import boto3
+from boto3.dynamodb.conditions import Key, Attr
+from botocore.exceptions import ClientError
 
-sns = boto3.client('sns')
+# Global variables used by all functions
+REGION = os.environ['REGION']
+BUCKET_NAME = os.environ['BUCKET_NAME']
+TABLE_NAME = os.environ['TABLE_NAME']
+s3 = boto3.resource('s3', region_name=REGION)
+dynamodb = boto3.resource('dynamodb', region_name=REGION)
+table = dynamodb.Table(TABLE_NAME)
 
 def lambda_handler(event, context):
-    try:
-        phone_number = event['phone-number']
-        list_name = event['list-name']
-        list_items = event['items']
-
-        if not isValidPhoneNumberFormat(phone_number):
-            return {
-                "statusCode": 400,
-                "message":"Error, please format phone number: 0001112222"
-            }
-        phone_number = '+1' + phone_number # add country code
-        text = formatJsonForTextMessage(list_name, list_items)
-        sendStrToPhone(phone_number, text)
-        return {
-            "statusCode": 200,
-            "message": "Success, sent {} to {}".format(list_name, phone_number)
-        }
-    except:
-        return {
-            "statusCode": 418,
-            "message": "Serverside error"
-        }
-
-
-def sendStrToPhone(phone_number, text):
-    """ send formatted text to phone via SNS
-
-    Key Arguments
-    text -- output of formatJsonForTextMessage(json)
-    phone_number -- target phone, format: +1#########
+    """Deletes database items based on the front-end request.
     """
-    sns.publish(
-        PhoneNumber = phone_number,
-        Message = text
+    try:
+        username = event['username']
+        list_name = event['list-name']
+        delete_all = bool(event['delete-all']) # boolean
+        list_location = generateListLocation(username, list_name)
+        if delete_all:
+            deleteS3Object(username)
+            deleteDBRange(username)
+            return {"statusCode": 200, "message": "All lists associated with {} have been deleted!".format(username) }
+
+        if not fileExistsInBucket(list_location, BUCKET_NAME):
+            return {"statusCode": 200, "message": "{} had never existed in the first place.".format(list_name) + list_location}
+
+        deleteS3Object(list_location)       # Delete file from S3
+        deleteDBItem(username, list_location)   # Remove list meta-data from DynamoDb
+
+        return {"statusCode": 200, "message": "Removed {} from our database.".format(list_name)}
+    except:
+        return {"statusCode": 418,"message": "Serverside error"}
+
+##########################
+### DynamoDB Functions ###
+##########################
+
+def deleteDBItem(partition_key, sort_key):
+    """ Deletes a row off the DynamoDB table using associated key
+
+    Keyword Arguments
+    partition_key -- username
+    sort_key -- the list's location, output of generateListLocation
+    """
+    table.delete_item(
+        Key = {
+            "username":partition_key,
+            "list-location":sort_key
+        }
     )
 
-def formatJsonForTextMessage(list_name, list_items):
-    """ formats list name and list items into string
+def deleteDBRange(username):
+    """ Get all db items within a range using partition_key and sort_key,
+        then delete them all.
+
+        In this case we want to delete all db items associate with a username
+        We query the table using the partition key and then delete all resulting items.
+
+    Keyword Arguments
+    username -- The username of the account fetching the list
+    """
+    ce = Key('username').eq(username)
+    response = table.query(
+        KeyConditionExpression = ce
+    )
+    items = response["Items"]
+    for item in items:                          # for each list associated with the username
+        list_location = item['list-location']
+        deleteDBItem(username, list_location)   # delete single meta-data item
+        deleteS3Object(list_location)           # delete corresponding text file
+    deleteS3Object(username + '/')              # after loop, delete the empty directory
+
+####################
+### S3 Functions ###
+####################
+
+def deleteS3Object(location_key):
+    """ delete a file off of the target S3 bucket
 
     Key Arguments
-    list_name -- The name of the list from input field frontend
-    list_items -- Each row item on front end
+    location_key -- output of generateListLocation, location of file on s3
     """
-    text = ''
-    input_fields = ['item-quantity','item-name','item-notes']
-    if list_name:
-        text += list_name + '\n'
+    s3.Object(BUCKET_NAME, location_key).delete()
 
-    for item in list_items:
-        text += getValuesWithKeysFromDict(input_fields, item)
+########################
+### Helper Functions ###
+########################
 
-    return text
-
-def getValuesWithKeysFromDict(keys, item):
-    """ To simplify above for loop. A helper function.
+def generateListLocation(username, list_name):
+    """ generates file placement in S3 based on standardized storage
     """
-    text = ''
-    for key in keys:
-        text += item[key] + ' '
-    text += '\n'
-    return text
+    return username + '/' + list_name + '.txt'
 
-def isValidPhoneNumberFormat(phone_number):
-    """ Checks the validity of phone_number format
+def fileExistsInBucket(file_name, bucket_name):
+    """ Checks if the name of text_file is already taken in the bucket
 
-    Key Arguments
-    phone_number -- from phone number input field on frontend
+    Keyword Arguments:
+    file_name -- Output of generateTextFileName
+    bucket_name -- Name of environment variable for S3 bucket
     """
-    return phone_number.isdigit() and len(phone_number) == 10
+    file_exists = False
+
+    try:
+        s3.Object(bucket_name, file_name).load()
+    except botocore.exceptions.ClientError as e:
+        if e.response['Error']['Code'] == "404":
+            return file_exists
+    else:
+        file_exists = True
+    return file_exists
