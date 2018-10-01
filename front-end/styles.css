@@ -1,6 +1,9 @@
+
+/* Global Formats */
+
 body {
   padding-top: 5rem;
-  background-color: #dddfd4;
+  background-color: #e9ece5;
 }
 
 input {
@@ -16,6 +19,21 @@ input {
   padding: 3rem 1.5rem;
   text-align: center;
 }
+
+.container {
+  background-color: inherit;
+  height: 100vh;
+}
+
+.nav-background {
+  background-color: #3b3a36;
+  font-style: inherit;
+  /*text-transform: uppercase;*/
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Grocery List Formats*/
 
 .grocery-item {
   margin-top: 0.25rem;
@@ -73,21 +91,22 @@ input {
   padding: 1rem;
 
   cursor: pointer;
-  background-color: #fae596;
-  border: 0.125rem solid lightgray;
-  border-radius: .5rem;
+  background-color: #82a875;
+  border: 0.05rem solid #454944;
+  border-radius: .25rem;
   list-style-type: none;
   transition: all .5s ease-in;
 }
 
+
 .search-result-list-item:hover {
-  background-color: #e6cf8b;
+  background-color: #92bc84;
   transition: all .5s ease-in;
 }
 
 .search-result-list-item span {
   letter-spacing: 1px;
-  font-family: inherit;
+  font-family: inherit;#3b3a36
   font-size: inherit;
 	font-weight: 700;
 }
@@ -98,7 +117,22 @@ input {
   width: 32.5%;
   margin: .25rem 0rem 0rem 0rem;
   border: .5px solid darkgray;
-	text-transform: uppercase;
+  color: lightgray;
+  background-color: #3b3a36;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: inherit;
+  font-size: inherit;
+	font-weight: 700;
+
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.add-item-button:hover {
+  color: #e9ece5;
+  background-color: #4c4b48;
 	/*letter-spacing: 1px;*/
   font-family: inherit;
   font-size: inherit;

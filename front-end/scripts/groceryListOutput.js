@@ -32,6 +32,7 @@ let fill_json_list_items = (json_item) => {
   let forms = get_forms();
   if (forms.length < json_item.length) {
     add_grocery_item_forms(json_item.length - forms.length);
+    forms = get_forms();
   }
   for (let i=0; i<json_item.length; i++){
     let form = forms[i];

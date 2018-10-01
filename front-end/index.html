@@ -3,9 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+    <meta name="description" content="A web application that allows you to create shopping lists and send them to your phone, build on AWS">
+    <meta name="author" content="Brandon Do">
 
     <title>Cloud Shopping List</title>
 
@@ -13,20 +12,21 @@
     <link href="bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="styles.css" rel="stylesheet">
+    <meta name="awsc-lang" content="en">
+        <link rel="shortcut icon" type="image/x-icon" href="https://d3fopt2osyq14i.cloudfront.net/dist-f684021a6fbdb40edf6c412eca855e2740795e2a/img/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="https://d3fopt2osyq14i.cloudfront.net/dist-f684021a6fbdb40edf6c412eca855e2740795e2a/img/favicon.ico">
   </head>
 
   <body>
-
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="https://www.linkedin.com/in/brandon-g-do">Cloud Shopping List</a>
+    <nav id="main_nav" class="navbar navbar-expand-md navbar-dark fixed-top nav-background">
+      <a class="navbar-brand" href="#">Cloud Shopping List</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">LinkedIn</a>
+            <a class="nav-link" href="https://www.linkedin.com/in/brandon-g-do">LinkedIn</a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="https://github.com/Brandon-Do/Cloud-Shopping-List">Github Repository</a>
@@ -36,7 +36,6 @@
     </nav>
 
     <main role="main" class="container">
-
       <div class="starter-template">
         <h2>Built on AWS Lambda</h2>
         <p class="lead">This application will allow you to create shopping lists and then send them to your phone via text message!</p>
@@ -49,8 +48,8 @@
 
       <!-- Input Grocery Items -->
       <p id='server-message'>Enter Grocery List Information Here</p>
-      <input class='shopping-list-input' placeholder='Shopping list name' type='text' id='list-name' value='myGroceryList'>
-      <input class='shopping-list-input' placeholder='Username' type='text' id='username' value='brandondo64'>
+      <input class='shopping-list-input' placeholder='Shopping list name' type='text' id='list-name' value=''>
+      <input class='shopping-list-input' placeholder='Username' type='text' id='username' value=''>
       <input class='shopping-list-input' placeholder='Phone Number' type='tel' id='contact' value=''>
       <button class='add-item-button' onclick='add_grocery_line();'>Add Line</button>
       <button class='add-item-button' onclick='send_json_grocery_list_to_s3();'>Save List</button>
@@ -80,5 +79,6 @@
     <script type="text/javascript" src="scripts/searchGroceryLists.js"></script>
     <script type="text/javascript" src="scripts/sendGroceryListToPhone.js"></script>
     <script type="text/javascript" src="scripts/deleteListFile.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </body>
 </html>
